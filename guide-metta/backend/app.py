@@ -6,7 +6,7 @@ from flask_cors import CORS
 from hyperon import MeTTa
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=['https://metta-learner-playground.vercel.app'])
 
 # Persistent MeTTa session and code history
 metta_session = MeTTa()
