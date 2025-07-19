@@ -41,7 +41,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
             codeId: generateCodeId(),
           }),
         });
-        const data = await response.json();
+        
+        // Check if response has content before parsing JSON
+        const responseText = await response.text();
+        let data;
+        try {
+          data = responseText ? JSON.parse(responseText) : {};
+        } catch (parseError) {
+          console.error("JSON parse error:", parseError);
+          setError("Invalid response from server");
+          return;
+        }
+        
         if (response.ok) {
           setOutput((data.result || "(no output)").trim());
         } else {
@@ -53,7 +64,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code }),
         });
-        const data = await response.json();
+        
+        // Check if response has content before parsing JSON
+        const responseText = await response.text();
+        let data;
+        try {
+          data = responseText ? JSON.parse(responseText) : {};
+        } catch (parseError) {
+          console.error("JSON parse error:", parseError);
+          setError("Invalid response from server");
+          return;
+        }
+        
         if (response.ok) {
           setOutput((data.result || "(no output)").trim());
         } else {
