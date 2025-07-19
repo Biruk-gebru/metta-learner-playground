@@ -30,23 +30,33 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
     setIsRunning(true);
     setError("");
     setOutput("");
+    console.log("Backend URL:", backendUrl);
     try {
       if (language === "metta") {
+        const requestBody = {
+          code,
+          language: "metta",
+          codeId: generateCodeId(),
+        };
+        console.log("Sending request to:", `${backendUrl}/run-metta`);
+        console.log("Request body:", requestBody);
+        
         const response = await fetch(`${backendUrl}/run-metta`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            code,
-            language: "metta",
-            codeId: generateCodeId(),
-          }),
+          body: JSON.stringify(requestBody),
         });
         
         // Check if response has content before parsing JSON
         const responseText = await response.text();
+        console.log("Response text:", responseText);
+        console.log("Response status:", response.status);
+        console.log("Response ok:", response.ok);
+        
         let data;
         try {
           data = responseText ? JSON.parse(responseText) : {};
+          console.log("Parsed data:", data);
         } catch (parseError) {
           console.error("JSON parse error:", parseError);
           setError("Invalid response from server");
@@ -55,12 +65,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
         
         if (response.ok) {
           const result = data.result || "";
+          console.log("Result:", result);
           if (result.trim() === "") {
             setOutput("(no output)");
           } else {
             setOutput(result.trim());
           }
         } else {
+          console.log("Response not ok, error data:", data);
           setError((data.error || "Unknown error").trim());
         }
       } else if (language === "python") {
