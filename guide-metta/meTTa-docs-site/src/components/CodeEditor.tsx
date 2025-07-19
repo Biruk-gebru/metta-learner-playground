@@ -21,7 +21,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string>("");
 
-  const backendUrl = "https://metta-learner-playground.vercel.app";
+  const backendUrl = "http://metta-learner-playground-production.up.railway.app";
 
   // Helper to generate a unique codeId
   const generateCodeId = () => `code_${Date.now()}_${Math.floor(Math.random()*10000)}`;
