@@ -67,10 +67,10 @@ def run_metta():
             exception = [None]  # type: ignore[list-item]
             def run_code():
                 try:
-                    if metta_session is None:
-                        raise Exception("MeTTa session not initialized")
                     print(f"Starting MeTTa execution: {new_code}")  # Debug log
-                    res = metta_session.run(new_code)
+                    # Create a fresh session for each execution to avoid hanging
+                    fresh_session = MeTTa()
+                    res = fresh_session.run(new_code)
                     print(f"MeTTa execution completed, got {len(res)} results")  # Debug log
                     result.extend(res)
                 except Exception as e:
