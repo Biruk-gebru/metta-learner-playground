@@ -11,7 +11,12 @@ app = Flask(__name__)
 CORS(app)
 
 # Persistent MeTTa session and code history
-metta_session = MeTTa()
+try:
+    metta_session = MeTTa()
+    print("MeTTa session initialized successfully")  # Debug log
+except Exception as e:
+    print(f"Error initializing MeTTa session: {e}")  # Debug log
+    metta_session = None
 code_history = []  # List of dictionaries: [{"id": "code_id", "code": "metta_code"}, ...]
 
 # Queue and lock for managing concurrent MeTTa runs
@@ -62,6 +67,8 @@ def run_metta():
             exception = [None]  # type: ignore[list-item]
             def run_code():
                 try:
+                    if metta_session is None:
+                        raise Exception("MeTTa session not initialized")
                     print(f"Starting MeTTa execution: {new_code}")  # Debug log
                     res = metta_session.run(new_code)
                     print(f"MeTTa execution completed, got {len(res)} results")  # Debug log
@@ -148,6 +155,15 @@ def reset_atomspace():
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy", "message": "Backend is running"})
+
+@app.route('/test-metta', methods=['GET'])
+def test_metta():
+    try:
+        test_session = MeTTa()
+        result = test_session.run("(+ 1 2)")
+        return jsonify({"status": "success", "result": str(result)})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)})
 
 @app.route('/get-history', methods=['GET'])
 def get_history():
