@@ -31,7 +31,7 @@ const Sidebar = ({ dark }: { dark?: boolean }) => {
 
   return (
     <aside className={
-      `w-64 min-h-screen flex flex-col gap-6 border-r p-6 ` +
+      `w-64 min-h-screen flex flex-col gap-6 border-r p-4 lg:p-6 ` +
       (dark
         ? 'bg-metta-darkPanel border-metta-darkPanel'
         : 'bg-metta-lightPanel border-metta-lightPanel')

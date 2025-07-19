@@ -20,6 +20,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
   const [output, setOutput] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string>("");
+  const [queuePosition, setQueuePosition] = useState<number | null>(null);
+  const [queueStatus, setQueueStatus] = useState<string>("");
 
   const backendUrl = "https://metta-learner-playground-production.up.railway.app";
 
@@ -30,7 +32,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
     setIsRunning(true);
     setError("");
     setOutput("");
+    setQueuePosition(null);
+    setQueueStatus("");
+    
     console.log("Backend URL:", backendUrl);
+    
     try {
       if (language === "metta") {
         const requestBody = {
@@ -110,12 +116,28 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
       setError((err.message || "Failed to run code").trim());
     } finally {
       setIsRunning(false);
+      setQueuePosition(null);
+      setQueueStatus("");
     }
   };
 
   const handleClearOutput = () => {
     setOutput("");
     setError("");
+  };
+
+  // Check queue status
+  const checkQueueStatus = async () => {
+    try {
+      const response = await fetch(`${backendUrl}/queue-status`);
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    } catch (err) {
+      console.error("Failed to check queue status:", err);
+    }
+    return null;
   };
 
   useEffect(() => {
@@ -164,11 +186,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
 
   return (
     <div className={`relative my-6 ${className}`}>
-      <div className="flex items-center justify-between bg-metta-lightPanel dark:bg-metta-darkPanel px-3 py-2 rounded-t-md border-b">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-metta-lightPanel dark:bg-metta-darkPanel px-3 py-2 rounded-t-md border-b gap-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold uppercase tracking-wider text-metta-accent">{language}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
           <button
             className="p-2 rounded text-xs border hover:bg-metta-accent/10 flex items-center justify-center"
             onClick={toggleReadOnly}
@@ -194,14 +216,17 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
             <FaRedo />
           </button>
           <button
-            className="p-2 rounded text-xs border font-bold bg-metta-accent text-white hover:bg-metta-accent/80 flex items-center justify-center relative"
+            className="p-2 rounded text-xs border font-bold bg-metta-accent text-white hover:bg-metta-accent/80 flex items-center justify-center relative min-w-[60px]"
             aria-label="Run code"
-            title="Run code"
+            title={isRunning ? "Running..." : "Run code"}
             onClick={handleRun}
             disabled={isRunning}
           >
             {isRunning ? (
-              <FaSpinner className="animate-spin absolute" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
+              <div className="flex items-center gap-1 absolute inset-0 justify-center">
+                <FaSpinner className="animate-spin" />
+                <span className="text-xs">Running...</span>
+              </div>
             ) : (
               <FaPlay />
             )}
@@ -228,10 +253,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
           onChange={setCode}
           readOnly={readOnly}
           basicSetup={{ lineNumbers: true, highlightActiveLine: true }}
-          className="rounded-b-md border-none font-mono text-sm"
+          className="rounded-b-md border-none font-mono text-xs sm:text-sm"
           style={{ background: "transparent" }}
         />
       )}
+      {/* Queue Status Indicator */}
+      {isRunning && (
+        <div className="mt-2 p-2 rounded bg-blue-50 dark:bg-blue-900/20 text-xs text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700">
+          <div className="flex items-center gap-2">
+            <FaSpinner className="animate-spin" />
+            <span>Your code is queued and will be executed in order...</span>
+          </div>
+        </div>
+      )}
+      
       {(output || error) && (
         <div
           className="mt-2 p-3 rounded bg-metta-lightPanel dark:bg-metta-darkPanel text-sm whitespace-pre-wrap border border-metta-accent"

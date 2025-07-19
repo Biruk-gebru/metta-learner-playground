@@ -6,17 +6,17 @@ import { extractHeadingsFromChildren } from "../components/extractHeadings";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
 const Content = (
-  <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
-    <h1 className="text-3xl font-bold mb-4">MeTTa and OpenCog Hyperon Guide</h1>
-    <h2 className="text-2xl font-semibold mt-8 mb-2">Introduction</h2>
+  <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-sm sm:text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
+    <h1 className="text-2xl sm:text-3xl font-bold mb-4">MeTTa and OpenCog Hyperon Guide</h1>
+    <h2 className="text-xl sm:text-2xl font-semibold mt-6 sm:mt-8 mb-2">Introduction</h2>
     <p>
       OpenCog Hyperon is a next-generation cognitive framework, and MeTTa (Meta Type Talk) is its core programming language. MeTTa is often described as a meta-programming or "language of thought" for AGI: it lets programs introspect and modify themselves, blend symbolic and sub-symbolic reasoning, and operate directly on rich knowledge graphs. The language was designed from the ground up to support declarative, functional, and logical computation over a central Atomspace hypergraph (a directed knowledge graph). This guide introduces MeTTa for beginners, starting from functional programming basics, then covering MeTTa's unique features, nondeterminism, and examples of use.
     </p>
-    <h2 className="text-2xl font-semibold mt-8 mb-2">Functional Programming Primer</h2>
+    <h2 className="text-xl sm:text-2xl font-semibold mt-6 sm:mt-8 mb-2">Functional Programming Primer</h2>
     <p className="mb-4">
       Functional programming builds programs by applying and composing functions, rather than by giving an explicit sequence of commands. In this paradigm, functions are first-class citizens: you can pass functions as arguments, return them from other functions, or bind them to variables, just like any data. Pure functions, which have no side effects (they don't modify external state) and always return the same output for the same inputs, are emphasized. State is often immutable – instead of updating variables, functions create and return new values. This leads to code that is more predictable and easier to reason about. For example, summing a list of numbers in a functional style would use a function that returns a new total rather than looping with a changing counter.
     </p>
-    <h3 className="text-xl font-semibold mt-6 mb-2">Key points of functional style:</h3>
+    <h3 className="text-lg sm:text-xl font-semibold mt-4 sm:mt-6 mb-2">Key points of functional style:</h3>
     <ul className="list-disc pl-6 mb-4">
       <li><b>Immutability:</b> Data structures don't change; functions produce new outputs without side effects.</li>
       <li><b>First-class functions:</b> You can assign functions to variables, pass them as arguments, and return them from other functions.</li>
@@ -29,7 +29,7 @@ const Content = (
     <p className="mb-4">
       These concepts underlie MeTTa's approach. In fact, MeTTa is very much a functional-language environment, extended with logic pattern-matching and graph-based data.
     </p>
-    <h3 className="text-xl font-semibold mt-6 mb-2">let and let* Constructs</h3>
+    <h3 className="text-lg sm:text-xl font-semibold mt-4 sm:mt-6 mb-2">let and let* Constructs</h3>
     <p className="mb-4">
       In many functional languages (especially Lisps and Schemes), <code>let</code> expressions allow you to bind local variables. A <code>let</code> introduces a new scope where you give names to values. For example, in Scheme-style syntax:
     </p>

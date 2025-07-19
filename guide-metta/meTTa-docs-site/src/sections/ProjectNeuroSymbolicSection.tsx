@@ -14,7 +14,7 @@ export const ProjectNeuroSymbolicSectionHeadings = [
 
 const ProjectNeuroSymbolicSection = () => (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-100 bg-slate-900 rounded-2xl shadow">
-    <h1 className="text-3xl font-bold mb-6">Project 3: Neuro-Symbolic AI Assistant (Backend)</h1>
+    <h1 className="text-3xl font-bold mb-6">Project 4: Neuro-Symbolic AI Assistant (Backend)</h1>
 
     <h2 id="overview" className="text-2xl font-semibold mt-8 mb-2">Overview & Project Idea</h2>
     <p>
