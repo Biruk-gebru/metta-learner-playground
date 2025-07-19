@@ -100,7 +100,7 @@ def reset_to_code():
         return jsonify({"error": "codeId is required"}), 400
     target_code_id = data['codeId']
     if len(code_history) == 0 :
-      return "", 200
+      return jsonify({"message": "No code history to reset"}), 200
     try:
         target_index = None
         for i, entry in enumerate(code_history):
@@ -126,7 +126,7 @@ def reset_to_code():
                     "id": entry["id"],
                     "error": str(replay_error)
                 })
-        return "", 200
+        return jsonify({"message": "Successfully reset to code"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -152,7 +152,7 @@ def remove_code():
         return jsonify({"error": "codeId is required"}), 400
     target_code_id = data['codeId']
     if len(code_history) == 0 :
-        return "", 200
+        return jsonify({"message": "No code history to remove"}), 200
     try:
         target_index = None
         for i, entry in enumerate(code_history):
@@ -178,7 +178,7 @@ def remove_code():
                     "id": entry["id"],
                     "error": str(replay_error)
                 })
-        return "", 200
+        return jsonify({"message": "Successfully removed code"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

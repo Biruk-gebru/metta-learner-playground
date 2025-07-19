@@ -1,0 +1,31 @@
+# Ignore sub-projects that are separate git repos
+pm-tutorial/
+metta_Training/
+Neuro-Symbolic-AI/
+
+# Node.js
+node_modules/
+.next/
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+*.swp
+*.swo 
