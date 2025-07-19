@@ -1,0 +1,34 @@
+Project 3: Neuro-Symbolic Integration Demo
+Goal:  Combine symbolic rules with a simple neural component. 
+Define  a  grounded  neural  atom:  In  Python,  you  might  create  a  class  inheriting  from
+GroundedAtom . For example:
+from hyperon import MeTTa, GroundedAtom, Atom
+class CatRecognizer(GroundedAtom):
+    def __call__(self, inputs):
+        image_atom = inputs[0]
+        # Imagine processing image_atom.pyval() with a neural net; here we fake it
+        confidence = 0.8 # pretend 80% confident it's a cat
+        return Atom(confidence) # return as an Atom
+mt = MeTTa()
+mt.register_grounded_atom("CatRecognizer", CatRecognizer)
+Now (CatRecognizer $img)  in MeTTa will invoke the Python code and return an Atom containing 0.8. 
+MeTTa rules using the classifier:  In a .metta file, write rules that use this:
+(= (is-cat $img) (CatRecognizer $img))
+(= (respond-if-cat $img $msg)
+   (is-cat $img)
+   (if (> (CatRecognizer $img) 0.5)
+       $msg
+       ""))  ; returns $msg only if confidence > 0.5
+The first rule wraps the grounded classifier . The second says: if the image is a cat (confidence >
+0.5), then respond with $msg; otherwise return an empty string. 
+Symbolic inference:  Suppose we have a symbolic fact like (responds Alice $greeting) .
+We can combine it with the image classification:
+(= (interaction $person $img)
+   (is-cat $img)
+   (responds $person (respond-if-cat $img "I see a cat!")))
+If Alice shows an image and CatRecognizer  is triggered, the rule chain will eventually
+produce the message "I see a cat!" for Alice. 
+This example shows how MeTTa can incorporate neural (sub-symbolic) results into symbolic logic. The
+grounded atom runs the neural network (or here a stub returning 0.8), and MeTTa pattern matching
+and conditionals decide how to respond based on that result. MeTTa thus bridges raw data processing
+(neural nets) and high-level reasoning in one framework . 

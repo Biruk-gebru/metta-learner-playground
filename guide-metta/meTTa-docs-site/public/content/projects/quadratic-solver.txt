@@ -1,0 +1,42 @@
+Project 2: Nondeterministic Math and Python Integration
+Goal:  Use MeTTa's nondeterminism and Python interop. 
+Nondeterministic choice:  Define a function that picks a number from 1–5 at random:
+(= (pick-one) (superpose (1 2 3 4 5)))
+Running !(pick-one)  will return one of 1–5 nondeterministically. To get all options, use
+collapse:
+!(collapse (pick-one))  ; yields (1 2 3 4 5)
+Math functions:  For example, define a square-root function:
+(= (mysqrt $x) (sqrt-math $x))
+Then !(mysqrt 16)  returns 4. MeTTa also has pow-math , log-math , etc.
+Example:  Solve a quadratic deterministically:
+(= (solve-quadratic $a $b $c)
+   (let* ((D (- (* $b $b) (* 4 $a $c))))
+     (if (< D 0)
+         (superpose)   ; no solutions
+         (superpose
+           ((/ (+ (- $b)  (sqrt-math D)) (* 2 $a))
+            (/ (- (- $b)  (sqrt-math D)) (* 2 $a)))))))
+Then !(collapse (solve-quadratic 1 -3 2))  yields (1 2), the two real roots of $x^2-3x+2$.
+Python function call:  Suppose you have a Python Fibonacci function in fib.py:
+def fib(n):
+    if n < 2: return n
+    return fib(n-1) + fib(n-2)
+In Python, you can integrate it with MeTTa:
+from hyperon import MeTTa, Atom
+mt = MeTTa()
+mt.register("fib", fib) # register the Python function under the name "fib"
+mt.eval('(= (fib $n) (call-py fib $n))') # Define MeTTa rule to call it
+result = mt.call("fib", [Atom(6)]) # invoke (fib 6)
+print(result) # prints Atom(8), since fib(6)=8
+This demonstrates calling external code from MeTTa. You can similarly register neural network
+classes or other heavy computations as grounded atoms. 
+Advanced math example:  Combine nondeterminism and math. For instance, find Pythagorean
+triples:
+(= (pythagorean-triple)
+   (superpose
+     ((a b c)
+      (= (+ (* a a) (* b b)) (* c c))
+      (> a 0) (> b 0) (> c 0))))
+Running !(collapse (pythagorean-triple))  will nondeterministically search for 
+(a, b, c)  satisfying $a^2 + b^2 = c^2$, yielding tuples like (3 4 5) , (6 8 10) , etc., if
+explored sufficiently. 

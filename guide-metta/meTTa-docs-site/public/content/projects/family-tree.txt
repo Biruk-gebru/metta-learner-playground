@@ -1,0 +1,36 @@
+Project 1: Family Heritage Tracker
+Goal:  Build a simple family-tree program in MeTTa to practice facts, rules, and recursion. 
+Define parent-child facts:  In a .metta file, add atoms for each parent-child pair:
+(inheritance Mary Alice)
+(inheritance John Mary)
+(inheritance John Bob)
+(inheritance Bob Carol)
+Each (inheritance P C)  atom says P is a parent of C. These are just data atoms in the
+Atomspace. 
+Parent rule:  Define a rule so (parent X Y)  matches when inheritance(X, Y)  exists:
+(= (parent $X $Y) (inheritance $X $Y))
+Now (parent John Mary)  will succeed because (inheritance John Mary)  is in the
+graph. 
+Ancestor rule (recursive):  Using two rules:
+(= (ancestor $X $Y) (parent $X $Y))       ; base case
+(= (ancestor $X $Y) (parent $X $Z) (ancestor $Z $Y))
+The first says "X is an ancestor of Y if X is a parent of Y." The second says "X is an ancestor of Y if X
+is a parent of Z and Z is an ancestor of Y." Together they recursively capture all descendants.
+Queries:  To find all descendants of John, you can query with collapse:
+!(collapse (ancestor John $Who))
+This will return a tuple of all individuals who are descendants of John (e.g. (Mary Bob Alice 
+Carol)). A simple boolean check !(ancestor John Alice)  will succeed (implicitly
+returning () for true). 
+Explanation:  Each = definition is a rule pattern. Variables $X, $Y, $Z  match actual atoms.
+This is analogous to Prolog clauses. When you run a query, MeTTa unifies patterns against the
+Atomspace. 
+graph LR
+  John --> Mary
+  Mary --> Alice
+  John --> Bob
+  Bob --> Carol
+Visualization:  Each arrow (e.g. John → Mary ) represents an (inheritance John Mary)  atom in
+the Atomspace. 
+This project teaches basic MeTTa syntax ( = rules), asserting facts, and recursion. You can extend it by
+adding more families or attributes. For instance, write a function to list all ancestors of someone, or
+check if any ancestor satisfies a condition (using collapse  to collect results). 
