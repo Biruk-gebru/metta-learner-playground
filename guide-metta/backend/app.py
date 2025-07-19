@@ -32,13 +32,18 @@ def process_queue():
 @app.route('/run-metta', methods=['POST'])
 def run_metta():
     global metta_session, code_history, current_runs
-    data = request.get_json()
-    if not data or 'code' not in data or data.get("language") != "metta":
-        return jsonify({"error": "Invalid input"}), 400
-    new_code = data['code']
-    code_id = data.get('codeId')
-    if not code_id:
-        return jsonify({"error": "codeId is required"}), 400
+    try:
+        data = request.get_json()
+        if not data or 'code' not in data or data.get("language") != "metta":
+            return jsonify({"error": "Invalid input"}), 400
+        new_code = data['code']
+        code_id = data.get('codeId')
+        if not code_id:
+            return jsonify({"error": "codeId is required"}), 400
+        print(f"Received MeTTa code: {new_code}")  # Debug log
+    except Exception as e:
+        print(f"Error parsing request: {e}")  # Debug log
+        return jsonify({"error": f"Request parsing error: {str(e)}"}), 400
 
     def execute_code():
         nonlocal new_code, code_id
@@ -57,9 +62,12 @@ def run_metta():
             exception = [None]  # type: ignore[list-item]
             def run_code():
                 try:
+                    print(f"Starting MeTTa execution: {new_code}")  # Debug log
                     res = metta_session.run(new_code)
+                    print(f"MeTTa execution completed, got {len(res)} results")  # Debug log
                     result.extend(res)
                 except Exception as e:
+                    print(f"MeTTa execution error: {e}")  # Debug log
                     exception[0] = e  # type: ignore[assignment]
             thread = threading.Thread(target=run_code)
             thread.start()
@@ -136,6 +144,10 @@ def reset_atomspace():
     metta_session = MeTTa()
     code_history = []
     return jsonify({"message": "AtomSpace and code history completely reset."})
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy", "message": "Backend is running"})
 
 @app.route('/get-history', methods=['GET'])
 def get_history():
