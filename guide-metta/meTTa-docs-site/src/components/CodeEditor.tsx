@@ -54,7 +54,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
         }
         
         if (response.ok) {
-          setOutput((data.result || "(no output)").trim());
+          const result = data.result || "";
+          if (result.trim() === "") {
+            setOutput("(no output)");
+          } else {
+            setOutput(result.trim());
+          }
         } else {
           setError((data.error || "Unknown error").trim());
         }
@@ -77,7 +82,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
         }
         
         if (response.ok) {
-          setOutput((data.result || "(no output)").trim());
+          const result = data.result || "";
+          if (result.trim() === "") {
+            setOutput("(no output)");
+          } else {
+            setOutput(result.trim());
+          }
         } else {
           setError((data.error || "Unknown error").trim());
         }
