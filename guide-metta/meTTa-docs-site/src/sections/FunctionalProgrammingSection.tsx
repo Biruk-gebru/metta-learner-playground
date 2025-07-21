@@ -22,29 +22,43 @@ const Content = (
       <li><b>First-class functions:</b> You can assign functions to variables, pass them as arguments, and return them from other functions.</li>
       <li><b>Composition and higher-order functions:</b> Common operations like <code>map</code>, <code>filter</code>, and <code>fold</code> are used to process lists. These functions take other functions as inputs to transform data. For example:</li>
     </ul>
-    <CodeEditor initialCode={'(map-atom (1 2 3) $x (+ $x 1)) ; yields (2 3 4)'} language="metta" />
+    <CodeEditor initialCode={'!(map-atom (1 2 3) $x (+ $x 1)) ; yields (2 3 4)'} language="metta" />
     <ul className="list-disc pl-6 mb-4">
-      <li><b>Declarative style:</b> You describe <i>what</i> to compute (e.g. "sum these values") rather than how to loop and accumulate. A pure function always yields the same result for given inputs, so you can reason about code modularly without worrying about hidden state.</li>
+      {/* <li><b>Declarative style:</b> You describe <i>what</i> to compute (e.g. "sum these values") rather than how to loop and accumulate. A pure function always yields the same result for given inputs, so you can reason about code modularly without worrying about hidden state.</li> */}
     </ul>
     <p className="mb-4">
       These concepts underlie MeTTa's approach. In fact, MeTTa is very much a functional-language environment, extended with logic pattern-matching and graph-based data.
     </p>
     <h3 className="text-lg sm:text-xl font-semibold mt-4 sm:mt-6 mb-2">let and let* Constructs</h3>
     <p className="mb-4">
-      In many functional languages (especially Lisps and Schemes), <code>let</code> expressions allow you to bind local variables. A <code>let</code> introduces a new scope where you give names to values. For example, in Scheme-style syntax:
-    </p>
-    <CodeEditor initialCode={'(let $x 3 (+ $x 4)) ; yields 7, with x=3 only inside this let'} language="metta" />
-    <p className="mb-4">
-    Here, <code>x</code> is bound to <code>3</code>. The result of <code>(+ x 4)</code> is <code>7</code> within that local scope, and <code>x</code> disappears afterward. The binding in <code>let</code> happens before evaluating the body, so the right-hand side cannot refer to the new name being defined.
+      In MeTTa, the <code>let</code> construct binds a single variable (or pattern) to a value within a local scope. The <code>let*</code> construct allows you to bind several variables in sequence, where each binding can use the variables defined before it.
     </p>
     <p className="mb-4">
-      By contrast, <code>let*</code> performs bindings sequentially. Each binding can use the variables defined by earlier bindings. For example:
+      But unlike many functional languages, MeTTa’s <code>let</code> and <code>let*</code> don’t just assign values—they perform <b>unification</b>. Unification is a process where the system tries to make two expressions structurally identical by finding suitable variable bindings. In functional programming, this is more general than simple assignment: it can match patterns, not just values.
     </p>
-    <CodeEditor initialCode={'(let* (($x 2)\n  ($y (* $x 3))) ; here x is already 2\n  (+ $x $y))\n; yields 2 + 6 = 8'} language="metta" />
-    <p>
-      In this <code>let*</code>, x is first bound to 2, and then y is bound to <code>(* x 3)</code>, using the just-bound x. The result is 8. If we had used a plain <code>let</code> instead, the reference to x inside the definition of y would not see the new x, causing an error or undefined behavior. In practice, use <code>let</code> when all bindings are independent, and <code>let*</code> when later bindings need earlier ones. This keeps code flatter by avoiding nested scopes and lets you name intermediate results step by step.
+    <p className="mb-4">
+      <b>What is unification?</b><br/>
+      Unification is a key concept in logic and functional programming languages. Instead of just assigning a value to a variable, unification tries to find a way to make two expressions equal by solving for variables. For example, unifying <code>$x</code> with <code>3</code> means <code>$x</code> becomes <code>3</code>. But unifying <code>($x $y)</code> with <code>(1 2)</code> means <code>$x</code> becomes <code>1</code> and <code>$y</code> becomes <code>2</code>.
     </p>
-    <SectionNav next={{ label: "What is MeTTa?", slug: "what-is-metta" }} />
+    <p className="mb-4">
+      This is more powerful than assignment, because it can solve for multiple variables at once, and can work with patterns, not just concrete values.
+    </p>
+    <p className="mb-4">
+      <b>let: single-variable or pattern unification</b><br/>
+      In MeTTa, <code>let</code> performs unification between a variable or pattern and a value, and then evaluates the body with that binding:
+    </p>
+    <CodeEditor initialCode={'!(let $x 3 (+ $x 4))\n; yields 7, $x is unified with 3 in the body'} language="metta" />
+    <CodeEditor initialCode={'!(let ($x $y) (1 2) (+ $x $y))\n; yields 3, $x is unified with 1, $y with 2'} language="metta" />
+    <p className="mb-4">
+      <b>let*: sequential unification</b><br/>
+      <code>let*</code> allows you to perform a sequence of unifications, where each step can use the results of previous steps:
+    </p>
+    <CodeEditor initialCode={'!(let* (($x 2)\n  ($y (* $x 3)))\n  (+ $x $y))\n; yields 8, $x is unified with 2, $y is unified with (* $x 3) = 6'} language="metta" />
+    <CodeEditor initialCode={'!(let* ((($a $b) (1 2))\n  ($sum (+ $a $b)))\n  $sum)\n; yields 3, $a is 1, $b is 2, $sum is 3'} language="metta" />
+    <p className="mb-4">
+      Because <code>let</code> and <code>let*</code> use unification, you can do more than just assign values—you can destructure data, match patterns, and write more general code. This is a powerful feature that sets MeTTa apart from many other functional languages.
+    </p>
+    <SectionNav previous={{ label: "Installation", slug: "installation" }} next={{ label: "What is MeTTa?", slug: "what-is-metta" }} />
   </div>
 );
 

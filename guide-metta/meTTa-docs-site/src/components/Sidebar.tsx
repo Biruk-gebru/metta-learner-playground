@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const chapters = [
+  { label: "Installation", slug: "installation" },
   { label: "Functional Programming", slug: "functional-programming" },
   { label: "What is MeTTa?", slug: "what-is-metta" },
   { label: "Non-Determinism", slug: "nondeterminism" },
@@ -10,7 +11,6 @@ const chapters = [
   { label: "Standard Library", slug: "standard-library" },
   { label: "Recursion", slug: "recursion" },
   { label: "Best Practices", slug: "best-practices" },
-  { label: "Installation", slug: "installation" },
 ];
 
 const projects = [

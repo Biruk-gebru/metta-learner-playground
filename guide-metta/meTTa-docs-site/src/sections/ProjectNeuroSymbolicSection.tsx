@@ -17,6 +17,9 @@ const ProjectNeuroSymbolicSection = () => (
     <h1 className="text-3xl font-bold mb-6">Project 4: Neuro-Symbolic AI Assistant (Backend)</h1>
 
     <h2 id="overview" className="text-2xl font-semibold mt-8 mb-2">Overview & Project Idea</h2>
+    <p className="mb-4">
+      <b>Neuro-symbolic AI</b> is an approach to artificial intelligence that integrates the strengths of symbolic reasoning (such as logic, rules, and structured knowledge representation) with neural network-based learning (such as deep learning and pattern recognition). Symbolic systems excel at explicit reasoning, interpretability, and handling structured data, while neural networks are powerful for perception, generalization, and learning from unstructured data. By combining these paradigms, neuro-symbolic AI aims to create systems that can both learn from data and reason about knowledge, enabling more robust, explainable, and flexible intelligence than either approach alone.
+    </p>
     <p>
       This project demonstrates a backend for a <b>Neuro-Symbolic AI Assistant</b>—a system that combines symbolic reasoning (using MeTTa/Hyperon) with neural (LLM, e.g., Google Gemini) reasoning. The backend decides which engine to use for each user query and can even combine both for hybrid explanations.
     </p>

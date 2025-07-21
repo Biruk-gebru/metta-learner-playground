@@ -12,8 +12,7 @@ This project provides:
 
 ## Live Demo
 
-- **Frontend:** [https://vercel.com/biruk-s-projects-7586ac34/metta-learner-playground/72n5trRbCjVyx7RTRTY1cXaWovD5](https://vercel.com/biruk-s-projects-7586ac34/metta-learner-playground/72n5trRbCjVyx7RTRTY1cXaWovD5)
-- **Backend:** [https://railway.com/project/e50dd081-848a-449c-bd5e-2e9d62b54781/service/e58881c2-3cab-4479-81fe-e0f4337e15e3?environmentId=575a782e-b663-4b08-ae57-87a3f3d1938c](https://railway.com/project/e50dd081-848a-449c-bd5e-2e9d62b54781/service/e58881c2-3cab-4479-81fe-e0f4337e15e3?environmentId=575a782e-b663-4b08-ae57-87a3f3d1938c)
+- **Website:** [https://metta-learner-playground.vercel.app](https://metta-learner-playground.vercel.app)
 
 ## Installation
 

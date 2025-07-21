@@ -84,13 +84,13 @@ else:
       <h3 className="text-lg font-semibold mb-2">References & Further Resources</h3>
       <ul className="list-disc pl-6 text-sm">
         <li>
-          <a href="https://www.youtube.com/watch?v=Hp28F9gL2Cc&t=1s" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
-            Introduction to MeTTa (YouTube video)
+          <a href="https://www.youtube.com/@BeyondTheCode_AI_" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
+            Beyond The Code AI — YouTube Channel (MeTTa tutorials, guides, and more)
           </a>
         </li>
       </ul>
     </div>
-    <SectionNav previous={{ label: "Best Practices", slug: "best-practices" }} next={{ label: "Family Tree", slug: "projects/family-tree" }} />
+    <SectionNav next={{ label: "Functional Programming", slug: "functional-programming" }} />
   </div>
 );
 

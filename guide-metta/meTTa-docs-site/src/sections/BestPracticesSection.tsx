@@ -16,7 +16,7 @@ const BestPracticesSection = () => (
         <b>Use library functions:</b> MeTTa's standard library is rich. Before writing complex recursion, check if a built-in (like <code>map-atom</code>, <code>filter-atom</code>, <code>unique-atom</code>, math functions, etc.) can do it. These are optimized and save time.
       </li>
       <li>
-        <b>Ground heavy computations:</b> If some work is complex (e.g. heavy math or machine learning inference), implement it as a grounded atom in Python/C++ rather than in pure MeTTa rules. Pattern matching in MeTTa has overhead, so offloading heavy lifting can improve performance.
+        <b>Ground heavy computations:</b> If some work is complex (e.g. heavy math or machine learning inference), implement it as a grounded atom in Python rather than in pure MeTTa rules. Pattern matching in MeTTa has overhead, so offloading heavy lifting can improve performance.
       </li>
       <li>
         <b>Quoting:</b> Only use <code>quote</code> when you need to treat code as data (e.g. generating rules on-the-fly). Unquoted symbols are treated as pattern variables or looked up as atoms. Remember the difference.
@@ -28,7 +28,7 @@ const BestPracticesSection = () => (
         <b>Modularity:</b> Break logic into small named functions (each introduced with <code>=</code>). Give meaningful names and, if helpful, add type annotations (<code>(: funcName (-&gt; Number Number))</code>). Each rule is independent, which makes reasoning about each case easier.
       </li>
     </ul>
-    <SectionNav previous={{ label: "Recursion", slug: "recursion" }} next={{ label: "Installation", slug: "installation" }} />
+    <SectionNav previous={{ label: "Recursion", slug: "recursion" }} next={{ label: "Family Tree", slug: "projects/family-tree" }} />
   </div>
 );
 
