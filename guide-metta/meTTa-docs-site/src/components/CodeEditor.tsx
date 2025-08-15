@@ -23,7 +23,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
   const [queuePosition, setQueuePosition] = useState<number | null>(null);
   const [queueStatus, setQueueStatus] = useState<string>("");
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
+  const backendUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "http://localhost:5000";
 
   // Helper to generate a unique codeId
   const generateCodeId = () => `code_${Date.now()}_${Math.floor(Math.random()*10000)}`;
