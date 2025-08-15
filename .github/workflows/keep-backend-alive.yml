@@ -1,0 +1,23 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"  # every 10 minutes
+  workflow_dispatch: {}
+
+jobs:
+  ping-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        run: |
+          set -e
+          URL="https://metta-learner-playground-2.onrender.com/health"
+          echo "Pinging $URL"
+          curl -sS --max-time 15 --retry 3 --retry-delay 5 "$URL" | sed -e 's/.*/response: &/'
+      - name: Ping root
+        run: |
+          set -e
+          URL="https://metta-learner-playground-2.onrender.com/"
+          echo "Pinging $URL"
+          curl -sS --max-time 15 --retry 3 --retry-delay 5 -I "$URL" | sed -e 's/.*/header: &/'
