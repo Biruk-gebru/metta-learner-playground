@@ -89,7 +89,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) =>
   };
 
   return (
-    <div className="sticky top-6">
+    <div className="sticky top-6 overflow-x-hidden">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
           Table of Contents
@@ -105,14 +105,14 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) =>
           
           return (
             <div key={heading.id}>
-              <div className="flex items-center">
+              <div className="flex items-center min-w-0">
                 <Link 
                   href={`#${heading.id}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleClick(heading.id);
                   }}
-                  className={`flex-1 text-left group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  className={`flex-1 text-left group flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 overflow-hidden ${
                     isActive
                       ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400'
@@ -120,7 +120,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) =>
                   style={{ paddingLeft: `${12 + getIndentLevel(heading.level)}px` }}
                 >
                   <span className="text-xs opacity-70">{getHeadingIcon(heading.level)}</span>
-                  <span className={`text-sm font-medium truncate ${
+                  <span className={`text-sm font-medium truncate flex-1 ${
                     heading.level === 1 ? 'font-semibold' : 'font-normal'
                   }`}>
                     {heading.title}
@@ -157,7 +157,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) =>
                             e.preventDefault();
                             handleClick(child.id);
                           }}
-                          className={`block py-1 px-2 rounded transition-colors text-sm ${
+                          className={`block py-1 px-2 rounded transition-colors text-sm overflow-hidden ${
                             activeId === child.id
                               ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium'
                               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-200'
@@ -165,7 +165,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) =>
                           style={{ paddingLeft: `${12 + getIndentLevel(child.level)}px` }}
                         >
                           <span className="text-xs opacity-50">{getHeadingIcon(child.level)}</span>
-                          <span className="text-xs truncate">{child.title}</span>
+                          <span className="text-xs truncate block max-w-full">{child.title}</span>
                         </Link>
                       );
                     })}
