@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaList, FaTimes } from "react-icons/fa";
-import { TOCHeading } from "./TableOfContents";
+import type { TOCHeading } from "./TableOfContents";
 
 interface MobileTableOfContentsProps {
   headings: TOCHeading[];
