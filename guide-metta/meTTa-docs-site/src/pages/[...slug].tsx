@@ -22,7 +22,9 @@ export default function ChapterPage() {
   if (joined === "functional-programming") {
     return (
       <Layout headings={FunctionalProgrammingSectionHeadings}>
-        <FunctionalProgrammingSection />
+        <div className="prose dark:prose-invert max-w-none">
+          <FunctionalProgrammingSection />
+        </div>
       </Layout>
     );
   }

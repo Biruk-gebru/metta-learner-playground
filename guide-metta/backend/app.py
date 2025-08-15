@@ -4,16 +4,35 @@ import sys
 import threading
 import queue
 import uuid
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
 from hyperon import MeTTa
 
 app = Flask(__name__)
-CORS(app, origins=['https://metta-learner-playground.vercel.app'])
+
+# Allow multiple origins for different deployment environments
+ALLOWED_ORIGINS = [
+    'https://metta-learner-playground.vercel.app',
+    'http://localhost:3000',
+    'https://metta-learner.onrender.com',
+    'https://metta-learner.railway.app'
+]
+
+# Get origin from environment variable or use default
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+if FRONTEND_URL not in ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS.append(FRONTEND_URL)
+
+CORS(app, origins=ALLOWED_ORIGINS)
 
 # Persistent MeTTa session and code history
 metta_session = MeTTa()
 code_history = []  # List of dictionaries: [{"id": "code_id", "code": "metta_code"}, ...]
+
+# Configurable timeouts
+PYTHON_RUN_TIMEOUT = int(os.environ.get('PYTHON_RUN_TIMEOUT', '30'))
 
 # Queuing system for handling multiple run requests
 request_queue = queue.Queue()
@@ -75,7 +94,7 @@ def process_queue():
                         [sys.executable, '-c', code],
                         capture_output=True,
                         text=True,
-                        timeout=5
+                        timeout=PYTHON_RUN_TIMEOUT
                     )
                     output = result.stdout
                     error = result.stderr
@@ -94,7 +113,7 @@ def process_queue():
                         
             except subprocess.TimeoutExpired:
                 request_results[request_id] = {
-                    "error": "Execution timed out after 5 seconds",
+                    "error": f"Execution timed out after {PYTHON_RUN_TIMEOUT} seconds",
                     "status": "error"
                 }
             except Exception as e:
@@ -327,6 +346,16 @@ def queue_status():
         "is_processing": is_processing,
         "pending_requests": len(request_results)
     })
+
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for deployment platforms"""
+    return jsonify({
+        "status": "healthy",
+        "service": "metta-learner-api",
+        "version": "1.0.0"
+    }), 200
 
 
 if __name__ == '__main__':

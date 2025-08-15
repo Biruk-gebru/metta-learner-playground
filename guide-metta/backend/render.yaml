@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: metta-learner-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: FRONTEND_URL
+        value: https://metta-learner-playground.vercel.app
+    healthCheckPath: /health
+    autoDeploy: true 

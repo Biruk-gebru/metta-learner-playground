@@ -36,4 +36,7 @@ yarn-error.log*
 # Next.js specific
 .next/cache/
 .next/server/
-.next/static/ 
+.next/static/
+
+# Development scripts
+start-dev.sh 
