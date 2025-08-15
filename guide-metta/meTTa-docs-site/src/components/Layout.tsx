@@ -60,10 +60,10 @@ const Layout = ({ children, headings: headingsProp }: { children: React.ReactNod
       </header>
       
       <div className="flex flex-1 pt-20">
-        {/* Left sidebar - hidden on mobile */}
-        <div className="hidden lg:block w-64 min-w-64 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-r border-slate-200/50 dark:border-slate-700/50">
+        {/* Left sidebar - hidden on mobile; sticky and scrollable */}
+        <aside className="hidden lg:block w-64 min-w-64 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-r border-slate-200/50 dark:border-slate-700/50 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden">
           <Sidebar dark={true} />
-        </div>
+        </aside>
         
         <main className="flex-1 flex justify-center items-start overflow-y-auto">
           <div className="max-w-4xl w-full p-4 sm:p-6 lg:p-8">
@@ -84,14 +84,14 @@ const Layout = ({ children, headings: headingsProp }: { children: React.ReactNod
       
       <footer className="w-full text-center py-6 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-t border-slate-200/50 dark:border-slate-700/50">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 font-medium">
+          <p className="text-sm sm:text-base text-slate-800 dark:text-slate-100 font-semibold">
             Made by
             {' '}
-            <a href="https://github.com/Biruk-gebru" target="_blank" rel="noopener noreferrer" className="inline-block px-2 py-0.5 ml-1 rounded bg-purple-100/40 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 hover:underline">
+            <a href="https://github.com/Biruk-gebru" target="_blank" rel="noopener noreferrer" className="inline-block px-2 py-0.5 ml-1 rounded bg-purple-100/60 dark:bg-purple-900/40 text-purple-800 dark:text-purple-200 hover:underline">
               Biruk Gebru Jember (@Biruk-gebru)
             </a>
           </p>
-          <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">
+          <p className="text-xs text-slate-600 dark:text-slate-300 mt-2">
             Learn Symbolic & Neuro-Symbolic Programming with MeTTa
           </p>
         </div>

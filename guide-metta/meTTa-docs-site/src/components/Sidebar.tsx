@@ -53,7 +53,7 @@ const Sidebar = ({ dark = false }: { dark?: boolean }) => {
   };
 
   return (
-    <div className={`h-full overflow-y-auto ${dark ? 'bg-slate-900/50' : 'bg-white/50'} backdrop-blur-sm`}>
+    <div className={`h-full ${dark ? 'bg-slate-900/50' : 'bg-white/50'} backdrop-blur-sm overflow-x-hidden`}>
       <div className="p-6">
         <div className="mb-8">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">MeTTa Learner</h2>
