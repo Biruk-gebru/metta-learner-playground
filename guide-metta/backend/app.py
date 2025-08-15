@@ -179,30 +179,24 @@ def run_python():
     data = request.get_json()
     if not data or 'code' not in data:
         return jsonify({"error": "Invalid input"}), 400
-    
+
     code = data['code']
-    
-    # Generate unique request ID
-    request_id = str(uuid.uuid4())
-    
-    # Add request to queue
-    request_queue.put((request_id, code, None, "python"))
-    
-    # Wait for result with timeout
-    timeout = 30  # 30 seconds timeout
-    start_time = time.time()
-    
-    while time.time() - start_time < timeout:
-        if request_id in request_results:
-            result = request_results.pop(request_id)
-            if result["status"] == "completed":
-                return jsonify({"result": result["result"]})
-            else:
-                return jsonify({"error": result["error"]}), 500
-        time.sleep(0.1)
-    
-    # Timeout occurred
-    return jsonify({"error": "Request timed out"}), 408
+
+    try:
+        result = subprocess.run(
+            [sys.executable, '-c', code],
+            capture_output=True,
+            text=True,
+            timeout=PYTHON_RUN_TIMEOUT
+        )
+        if result.returncode != 0:
+            error_msg = result.stderr.strip() if result.stderr else f"Python execution failed with return code {result.returncode}"
+            return jsonify({"error": error_msg}), 500
+        return jsonify({"result": result.stdout})
+    except subprocess.TimeoutExpired:
+        return jsonify({"error": f"Execution timed out after {PYTHON_RUN_TIMEOUT} seconds"}), 408
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/reset-to-code', methods=['POST'])
 def reset_to_code():
