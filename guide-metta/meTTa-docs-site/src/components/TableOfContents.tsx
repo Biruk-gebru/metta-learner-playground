@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import Link from "next/link";
 
-interface Heading {
+export interface TOCHeading {
   id: string;
   title: string;
   level: number;
 }
 
 interface TableOfContentsProps {
-  headings: Heading[];
+  headings: TOCHeading[];
 }
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
