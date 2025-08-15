@@ -148,31 +148,31 @@ def run_metta():
     if not code_id:
         return jsonify({"error": "codeId is required"}), 400
 
-    # Generate unique request ID
-    request_id = str(uuid.uuid4())
-    
-    # Add request to queue
-    request_queue.put((request_id, new_code, code_id, "metta"))
-    
-    # Wait for result with timeout
-    timeout = 30  # 30 seconds timeout
-    start_time = time.time()
-    
-    while time.time() - start_time < timeout:
-        if request_id in request_results:
-            result = request_results.pop(request_id)
-            if result["status"] == "completed":
-                return jsonify({
-                    "result": result["result"],
-                    "codeId": result["codeId"],
-                    "historyLength": result["historyLength"]
-                })
-            else:
-                return jsonify({"error": result["error"]}), 500
-        time.sleep(0.1)
-    
-    # Timeout occurred
-    return jsonify({"error": "Request timed out"}), 408
+    try:
+        # Update history (replace existing entry with same codeId or append new)
+        code_entry = {"id": code_id, "code": new_code}
+        existing_index = None
+        for i, entry in enumerate(code_history):
+            if entry["id"] == code_id:
+                existing_index = i
+                break
+        if existing_index is not None:
+            code_history[existing_index] = code_entry
+        else:
+            code_history.append(code_entry)
+
+        # Execute MeTTa code synchronously
+        result = metta_session.run(new_code)
+        result_strs = [str(atom).strip() for atom in result]
+        formatted_result = '\n'.join(result_strs) + '\n'
+
+        return jsonify({
+            "result": formatted_result,
+            "codeId": code_id,
+            "historyLength": len(code_history)
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/run-python', methods=['POST'])
 def run_python():

@@ -18,7 +18,7 @@ This project provides:
 
 ### Prerequisites
 - Node.js (v18+ recommended)
-- Python 3.8+
+- Python 3.12+
 - pip (for backend)
 
 ### Frontend (Docs & Playground)
@@ -37,9 +37,16 @@ python app.py
 
 ## Usage
 - Visit the frontend in your browser (localhost or Vercel link)
-- Write and run MeTTa code in the playground
-- Use the reset button to clear the session
+- Write and run MeTTa or Python code in the playground
+- Use the reset button to clear the MeTTa session
 - Python/MeTTa integration examples are provided in the docs
+
+### Frontend env variable
+- Set `NEXT_PUBLIC_API_URL` to your backend URL for deployments (e.g., `https://metta-learner-playground-2.onrender.com`).
+- Note: NEXT_PUBLIC_ vars are baked at build time; redeploy the frontend after changes.
+
+### Backend CORS env
+- Set `FRONTEND_URL` on the backend (Render) to your exact frontend origin (e.g., `https://metta-learner-playground.vercel.app`).
 
 ## Contributing
 
@@ -53,6 +60,10 @@ We welcome contributions! To get started:
 - [![CI](https://github.com/Biruk-gebru/metta-learner-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/Biruk-gebru/metta-learner-playground/actions/workflows/ci.yml)
 - All PRs are checked for lint, build, and test status
 
+### Deployment notes
+- Backend runs on Render (see `guide-metta/backend/DEPLOYMENT.md`, `render.yaml`, `Procfile`, `runtime.txt`).
+- `/run-metta` and `/run-python` execute synchronously to avoid reverse-proxy timeouts.
+
 ## License
 
 This project is open source under the MIT License.
@@ -61,4 +72,4 @@ This project is open source under the MIT License.
 - Created by [Biruk Gebru Jember (@Biruk-gebru)](https://github.com/Biruk-gebru)
 
 ## Contact
-- For questions or support, open an issue or contact the maintainers via GitHub. 
+- For questions or support, open an issue or contact on Telegram: https://t.me/Biruk_Gebru

@@ -87,11 +87,12 @@ metta-learner-playground/
 - ✅ **Interactive Navigation**: Smooth scrolling and active states
 
 ### Backend Features
-- ✅ **MeTTa Code Execution**: Run MeTTa code in real-time
+- ✅ **MeTTa Code Execution**: Run MeTTa code in real-time (persistent session)
+- ✅ **Python Execution**: Run Python code in a subprocess with timeout control
 - ✅ **Code History**: Track and replay code execution
-- ✅ **Queue System**: Handle multiple concurrent requests
-- ✅ **Health Checks**: Monitor server status
-- ✅ **CORS Support**: Multiple deployment environments
+- ✅ **Synchronous Run Endpoints**: `/run-metta` and `/run-python` execute synchronously to avoid reverse-proxy timeouts
+- ✅ **Health Checks**: Monitor server status (`/health`)
+- ✅ **CORS Support**: Multiple deployment environments via `FRONTEND_URL`
 
 ### Content Contribution System
 - ✅ **Visual Editor**: No HTML/markdown knowledge required
@@ -120,9 +121,10 @@ metta-learner-playground/
 
 ### Backend API Development
 
-1. **Add** new endpoints in `guide-metta/backend/app.py`
+1. **Add** or modify endpoints in `guide-metta/backend/app.py`
 2. **Test** with curl or Postman
 3. **Update** frontend to use new endpoints
+4. Prefer synchronous execution for user-facing run endpoints unless a queue is explicitly required
 
 ## Troubleshooting
 
@@ -167,7 +169,13 @@ npm install --timeout=60000 --retry=3
 
 ## Deployment
 
-See `guide-metta/backend/DEPLOYMENT.md` for backend deployment instructions.
+- Backend: Render. See `guide-metta/backend/DEPLOYMENT.md`, `render.yaml`, `Procfile`, and `runtime.txt` (Python 3.12.x).
+- Frontend: Vercel.
+
+### Required environment variables
+- Frontend (Vercel): `NEXT_PUBLIC_API_URL` = your backend URL (e.g., `https://metta-learner-playground-2.onrender.com`). Rebuild after change.
+- Backend (Render): `FRONTEND_URL` = your exact frontend origin (e.g., `https://metta-learner-playground.vercel.app`).
+- Optional: `PYTHON_RUN_TIMEOUT` (default `30`).
 
 ## Contributing
 
@@ -180,5 +188,6 @@ See `guide-metta/backend/DEPLOYMENT.md` for backend deployment instructions.
 ## Support
 
 - **Discord**: https://discord.gg/opencog
+- **Telegram**: https://t.me/Biruk_Gebru
 - **GitHub Issues**: Report bugs and feature requests
-- **Documentation**: Check the `/contribute` page for content guidelines 
+- **Documentation**: Check the `/contribute` page for content guidelines
