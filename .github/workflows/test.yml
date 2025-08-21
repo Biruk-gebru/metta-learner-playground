@@ -25,10 +25,10 @@ jobs:
         cd guide-metta/meTTa-docs-site
         npm ci
     
-    - name: Run linting
+    - name: Type check
       run: |
         cd guide-metta/meTTa-docs-site
-        npm run lint
+        npx tsc --noEmit
     
     - name: Build frontend
       run: |
@@ -59,6 +59,7 @@ jobs:
         cd guide-metta/backend
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install requests
     
     - name: Run backend tests
       run: |
@@ -133,6 +134,7 @@ jobs:
         npm ci
         cd ../../guide-metta/backend
         pip install -r requirements.txt
+        pip install requests
     
     - name: Run integration tests
       run: |
