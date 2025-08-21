@@ -79,6 +79,17 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode, language, classNam
           } else {
             setOutput(result.trim());
           }
+          
+          // Reset atomspace after successful MeTTa execution
+          try {
+            await fetch(`${backendUrl}/reset-atomspace`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+            });
+            console.log("Atomspace reset after code execution");
+          } catch (resetError) {
+            console.warn("Failed to reset atomspace:", resetError);
+          }
         } else {
           console.log("Response not ok, error data:", data);
           setError((data.error || "Unknown error").trim());

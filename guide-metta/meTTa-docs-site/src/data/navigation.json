@@ -1,0 +1,43 @@
+{
+  "sections": [
+    {
+      "title": "Getting Started",
+      "items": [
+        { "label": "Installation", "slug": "installation", "type": "section" },
+        { "label": "What is MeTTa?", "slug": "what-is-metta", "type": "section" },
+        { "label": "Functional Programming", "slug": "functional-programming", "type": "section" }
+      ]
+    },
+    {
+      "title": "Core Concepts",
+      "items": [
+        { "label": "Atomspace", "slug": "atomspace", "type": "section" },
+        { "label": "Non-Determinism", "slug": "nondeterminism", "type": "section" },
+        { "label": "Recursion", "slug": "recursion", "type": "section" },
+        { "label": "Standard Library", "slug": "standard-library", "type": "section" }
+      ]
+    },
+    {
+      "title": "Best Practices",
+      "items": [
+        { "label": "Best Practices", "slug": "best-practices", "type": "section" }
+      ]
+    },
+    {
+      "title": "Resources",
+      "items": [
+        { "label": "Glossary", "slug": "glossary", "type": "page" },
+        { "label": "References", "slug": "references", "type": "page" }
+      ]
+    },
+    {
+      "title": "Projects",
+      "items": [
+        { "label": "Family Tree", "slug": "projects/family-tree", "type": "section" },
+        { "label": "Python Integration", "slug": "projects/python-integration", "type": "section" },
+        { "label": "Neuro-Symbolic", "slug": "projects/neuro-symbolic", "type": "section" },
+        { "label": "List Utils", "slug": "projects/list-utils", "type": "section" }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,14 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 
 export const BestPracticesSectionHeadings = [
   { id: "best-practices-and-tips", title: "Best Practices and Tips", level: 1 },
 ];
 
-const BestPracticesSection = () => (
+const BestPracticesSection = () => {
+  const navigation = getNavigationItems("best-practices");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="best-practices-and-tips" className="text-3xl font-bold mb-4">Best Practices and Tips</h1>
     <ul className="list-disc pl-6 mb-4 space-y-3">
@@ -28,8 +31,9 @@ const BestPracticesSection = () => (
         <b>Modularity:</b> Break logic into small named functions (each introduced with <code>=</code>). Give meaningful names and, if helpful, add type annotations (<code>(: funcName (-&gt; Number Number))</code>). Each rule is independent, which makes reasoning about each case easier.
       </li>
     </ul>
-    <SectionNav previous={{ label: "Recursion", slug: "recursion" }} next={{ label: "Family Tree", slug: "projects/family-tree" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default BestPracticesSection; 

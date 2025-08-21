@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
 export const ProjectNeuroSymbolicSectionHeadings = [
@@ -12,7 +12,10 @@ export const ProjectNeuroSymbolicSectionHeadings = [
   { id: "run-extend", title: "5. How to Run or Extend This Project", level: 1 },
 ];
 
-const ProjectNeuroSymbolicSection = () => (
+const ProjectNeuroSymbolicSection = () => {
+  const navigation = getNavigationItems("projects/neuro-symbolic");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-100 bg-slate-900 rounded-2xl shadow">
     <h1 className="text-3xl font-bold mb-6">Project 4: Neuro-Symbolic AI Assistant (Backend)</h1>
 
@@ -111,8 +114,9 @@ python app.py
     <p className="mb-6">
       For a full working example, see the <a href="https://github.com/yonayetol/Neuro-Symbolic-AI" target="_blank" rel="noopener noreferrer" className="underline text-metta-accent">Neuro-Symbolic-AI on GitHub</a>.
     </p>
-    <SectionNav previous={{ label: "List Utilities & Custom Functions", slug: "projects/list-utils" }} next={null} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default ProjectNeuroSymbolicSection; 

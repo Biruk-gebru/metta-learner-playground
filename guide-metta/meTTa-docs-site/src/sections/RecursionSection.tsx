@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -7,7 +7,10 @@ export const RecursionSectionHeadings = [
   { id: "recursion-and-iteration-in-metta", title: "Recursion and Iteration in MeTTa", level: 1 },
 ];
 
-const RecursionSection = () => (
+const RecursionSection = () => {
+  const navigation = getNavigationItems("recursion");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="recursion-and-iteration-in-metta" className="text-3xl font-bold mb-4">Recursion and Iteration in MeTTa</h1>
     <p className="mb-4">
@@ -39,8 +42,9 @@ const RecursionSection = () => (
     <p className="mb-4">
       These recursion patterns, along with <code>collapse</code> and basic list operations, cover a lot of use cases in MeTTa.
     </p>
-    <SectionNav previous={{ label: "Standard Library", slug: "standard-library" }} next={{ label: "Best Practices", slug: "best-practices" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default RecursionSection; 

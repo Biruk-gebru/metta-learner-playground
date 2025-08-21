@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -8,7 +8,10 @@ export const AtomspaceSectionHeadings = [
   { id: "core-data-types-in-metta", title: "Core Data Types in MeTTa", level: 2 },
 ];
 
-const AtomspaceSection = () => (
+const AtomspaceSection = () => {
+  const navigation = getNavigationItems("atomspace");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="atomspace-and-hyperon-integration" className="text-3xl font-bold mb-4">Atomspace and Hyperon Integration</h1>
     <p className="mb-4">
@@ -102,8 +105,9 @@ early.
     <p className="mb-4">
       In summary, MeTTa programs manipulate atoms in the Atomspace. These atoms can be primitive (symbols, numbers, strings) or compound (lists, function applications). The language lets you define and check rich types: you declare new types with <code>(: Name Type)</code> and functions with arrow types <code>{'(-> ...)'}</code>. Behind the scenes the interpreter enforces these types, so well-typed programs either evaluate correctly or produce errors. By combining symbolic pattern-matching, typed functional constructs, and grounding to external code, MeTTa provides a flexible yet disciplined way to build AI systems.
     </p>
-    <SectionNav previous={{ label: "Non-Determinism", slug: "nondeterminism" }} next={{ label: "Standard Library", slug: "standard-library" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default AtomspaceSection; 

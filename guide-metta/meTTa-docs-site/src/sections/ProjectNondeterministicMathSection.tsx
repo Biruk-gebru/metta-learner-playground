@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
 export const ProjectNondeterministicMathSectionHeadings = [
@@ -10,7 +10,10 @@ export const ProjectNondeterministicMathSectionHeadings = [
   { id: "full-python-example", title: "3. Full Python Example", level: 1 },
 ];
 
-const ProjectNondeterministicMathSection = () => (
+const ProjectNondeterministicMathSection = () => {
+  const navigation = getNavigationItems("projects/python-integration");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-100 bg-slate-900 rounded-2xl shadow">
     <h1 className="text-3xl font-bold mb-6">Project 2: Exploring MeTTa Expressions and Symbols from Python</h1>
 
@@ -126,8 +129,9 @@ Atom: (owner Alice Cat);
 
 </pre>
     </p>
-    <SectionNav previous={{ label: "Family Tree", slug: "projects/family-tree" }} next={{ label: "List Utilities & Custom Functions", slug: "projects/list-utils" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default ProjectNondeterministicMathSection; 

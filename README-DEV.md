@@ -191,3 +191,38 @@ npm install --timeout=60000 --retry=3
 - **Telegram**: https://t.me/Biruk_Gebru
 - **GitHub Issues**: Report bugs and feature requests
 - **Documentation**: Check the `/contribute` page for content guidelines
+
+## Backend Execution Model
+
+- The backend (`guide-metta/backend/app.py`) hosts a Flask server exposing run and utility endpoints.
+- A single persistent MeTTa session (`metta_session = MeTTa()`) is maintained in memory, plus an in-memory `code_history` array of submitted code entries (by `codeId`).
+- The default run endpoints execute code synchronously to provide immediate responses to the UI.
+- To avoid cross-cell contamination when desired, the frontend can call `/reset-atomspace` after successful runs. We currently do this automatically after each MeTTa run from the code editor so every block runs in a clean Atomspace.
+
+### Core Endpoints
+- `POST /run-metta`:
+  - Body: `{ code: string, language: "metta", codeId: string }`
+  - Stores or updates the code in `code_history` by `codeId`, runs it in the persistent MeTTa session, returns formatted string output.
+- `POST /run-python`:
+  - Body: `{ code: string }`
+  - Executes Python in a subprocess with timeout (configurable via `PYTHON_RUN_TIMEOUT`), returns stdout or error.
+- `POST /reset-atomspace`:
+  - Resets the MeTTa session and clears `code_history`. The UI calls this after each successful MeTTa execution to ensure isolation between blocks.
+- `GET /get-history`:
+  - Returns the current `code_history` and its length.
+- `POST /remove-code`:
+  - Body: `{ codeId: string }`
+  - Removes the target code and any subsequent entries, resets MeTTa, and replays prior history to restore state deterministically.
+- `GET /queue-status`:
+  - Returns size and status of the optional background queue (not used by default run endpoints).
+- `GET /health`:
+  - Health probe for deployments.
+
+### CORS and Environment
+- Allowed origins are configured with a whitelist; `FRONTEND_URL` is appended if not present.
+- `PYTHON_RUN_TIMEOUT` controls Python run timeout (default 30s).
+
+### Frontend Integration Notes
+- The code editor posts to `/run-metta` (or `/run-python`).
+- After a successful MeTTa run, the editor posts to `/reset-atomspace` to clear state.
+- `NEXT_PUBLIC_API_URL` must point to the backend base URL at build/runtime on the frontend.

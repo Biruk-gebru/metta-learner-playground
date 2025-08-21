@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 const MermaidRenderer = dynamic(() => import("../components/MermaidRenderer"), { ssr: false });
 
@@ -11,7 +11,10 @@ export const ProjectFamilyTreeSectionHeadings = [
   { id: "full-code-block", title: "4. Full Code Block", level: 1 },
 ];
 
-const ProjectFamilyTreeSection = () => (
+const ProjectFamilyTreeSection = () => {
+  const navigation = getNavigationItems("projects/family-tree");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-100 bg-slate-900 rounded-2xl shadow">
     <h1 className="text-3xl font-bold mb-6">Project 1: Family Heritage Tracker</h1>
 
@@ -270,8 +273,9 @@ const ProjectFamilyTreeSection = () => (
 !(is-nephew Pam)
 ! (let $n (collapse (ancestor Bob ())) (unique (superpose $n)))
 `} />
-    <SectionNav previous={{ label: "Installation", slug: "installation" }} next={{ label: "Python & MeTTa Integration", slug: "projects/python-integration" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default ProjectFamilyTreeSection; 

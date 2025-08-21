@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 const MermaidRenderer = dynamic(() => import("../components/MermaidRenderer"), { ssr: false });
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -15,8 +15,11 @@ export const WhatIsMettaSectionHeadings = [
   { id: "non-determinism", title: "Non-Determinism", level: 2 },
 ];
 
-const WhatIsMettaSection = () => (
-  <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
+const WhatIsMettaSection = () => {
+  const navigation = getNavigationItems("what-is-metta");
+  
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="the-metta-language" className="text-3xl font-bold mb-4">The MeTTa Language</h1>
     <p className="mb-4">
       MeTTa is a novel multi-paradigm language built for knowledge-centric AI. It combines functional style, logical pattern matching, and probabilistic constructs, all operating over a unified Atomspace graph. The Atomspace is a directed hypergraph: every piece of data or code is an atom (a node or a link) in a graph. This means, for example, that a symbolic term like <code>(Add 2 3)</code> is represented as a Link atom "Add" connected to the Number atoms 2 and 3. Code and data share the same graph structure, allowing introspection. Key features of MeTTa include:
@@ -56,8 +59,9 @@ const WhatIsMettaSection = () => (
     <p className="mb-4">
       Overall, MeTTa is essentially a "declarative knowledge-language" where you describe rules and let the engine handle matching, branching, and graph operations. It is sometimes called "Atomese 2" as a successor to OpenCog's Atomese. Its design prioritizes concise knowledge representation and reasoning over traditional imperative control flow.
     </p>
-    <SectionNav previous={{ label: "Functional Programming", slug: "functional-programming" }} next={{ label: "Non-Determinism", slug: "nondeterminism" }} />
-  </div>
-);
+    <SectionNav previous={navigation.previous} next={navigation.next} />
+    </div>
+  );
+};
 
 export default WhatIsMettaSection; 
