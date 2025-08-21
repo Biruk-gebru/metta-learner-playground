@@ -74,15 +74,6 @@ export default function ChapterPage() {
         <div className="prose dark:prose-invert max-w-none">
           <FunctionalProgrammingSection />
         </div>
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -90,15 +81,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={WhatIsMettaSectionHeadings} {...commonLayoutProps}>
         <WhatIsMettaSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -106,15 +88,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={NonDeterminismSectionHeadings} {...commonLayoutProps}>
         <NonDeterminismSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -122,15 +95,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={AtomspaceSectionHeadings} {...commonLayoutProps}>
         <AtomspaceSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -138,15 +102,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={StdLibHighlightsSectionHeadings} {...commonLayoutProps}>
         <StdLibHighlightsSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -154,15 +109,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={RecursionSectionHeadings} {...commonLayoutProps}>
         <RecursionSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -170,15 +116,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={BestPracticesSectionHeadings} {...commonLayoutProps}>
         <BestPracticesSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -186,15 +123,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={InstallationSectionHeadings} {...commonLayoutProps}>
         <InstallationSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -202,15 +130,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={ProjectFamilyTreeSectionHeadings} {...commonLayoutProps}>
         <ProjectFamilyTreeSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -218,15 +137,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={ProjectNondeterministicMathSectionHeadings} {...commonLayoutProps}>
         <ProjectNondeterministicMathSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -234,15 +144,6 @@ export default function ChapterPage() {
     return (
       <Layout headings={ProjectNeuroSymbolicSectionHeadings} {...commonLayoutProps}>
         <ProjectNeuroSymbolicSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
@@ -250,30 +151,12 @@ export default function ChapterPage() {
     return (
       <Layout headings={ProjectListUtilsSectionHeadings} {...commonLayoutProps}>
         <ProjectListUtilsSection />
-        {showEditor && (
-          <VisualEditor
-            initialContent={fileContent}
-            pageSlug={String(joined)}
-            pageTitle={pageTitle}
-            onSave={handleSaveDraft}
-            onCancel={() => setShowEditor(false)}
-          />
-        )}
       </Layout>
     );
   }
   return (
     <Layout {...commonLayoutProps}>
       <div className="text-center text-red-500">Page not found.</div>
-      {showEditor && (
-        <VisualEditor
-          initialContent={fileContent}
-          pageSlug={String(joined || '')}
-          pageTitle={pageTitle}
-          onSave={handleSaveDraft}
-          onCancel={() => setShowEditor(false)}
-        />
-      )}
     </Layout>
   );
 }
