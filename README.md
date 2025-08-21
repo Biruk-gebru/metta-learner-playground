@@ -12,7 +12,6 @@ A modern documentation and interactive playground for the MeTTa language and Hyp
 ## 🚀 Live Demo
 
 - **Website:** [https://metta-learner-playground.vercel.app](https://metta-learner-playground.vercel.app)
-- **Backend API:** [https://metta-learner-playground-2.onrender.com](https://metta-learner-playground-2.onrender.com)
 
 ## 📖 Overview
 
@@ -73,7 +72,7 @@ python app.py
 #### Frontend Environment Variables
 ```bash
 # Set your backend URL for deployments
-NEXT_PUBLIC_API_URL=https://metta-learner-playground-2.onrender.com
+NEXT_PUBLIC_API_URL=your-backend-url-here
 ```
 > **Note:** `NEXT_PUBLIC_` variables are baked at build time; redeploy the frontend after changes.
 
