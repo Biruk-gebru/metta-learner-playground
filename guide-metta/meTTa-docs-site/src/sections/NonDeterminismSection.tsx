@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -8,7 +8,10 @@ export const NonDeterminismSectionHeadings = [
   { id: "working-with-nondeterministic-results", title: "Working with Nondeterministic Results", level: 2 },
 ];
 
-const NonDeterminismSection = () => (
+const NonDeterminismSection = () => {
+  const navigation = getNavigationItems("nondeterminism");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="non-determinism-in-metta" className="text-3xl font-bold mb-4">Non-Determinism in MeTTa</h1>
     <p className="mb-4">
@@ -59,8 +62,9 @@ const NonDeterminismSection = () => (
     <p className="mb-4">
       Calling <code>!(collapse (solve-quadratic 1 -3 2))</code> will yield (1 2), the two real roots of <i>x² - 3x + 2</i>, collected into a tuple. Here <code>solve-quadratic</code> nondeterministically branches on the two solutions, and <code>collapse</code> gathers them.
     </p>
-    <SectionNav previous={{ label: "What is MeTTa?", slug: "what-is-metta" }} next={{ label: "Atomspace & Data Types", slug: "atomspace" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default NonDeterminismSection; 

@@ -3,11 +3,19 @@ import Sidebar from "./Sidebar";
 import MobileMenu from "./MobileMenu";
 import { MobileTableOfContents } from "./MobileTableOfContents";
 import Link from "next/link";
-import { FaBrain, FaGithub, FaDiscord } from "react-icons/fa";
+import { FaBrain, FaGithub, FaDiscord, FaEdit } from "react-icons/fa";
 import { TableOfContents } from "./TableOfContents";
 import { extractHeadingsFromChildren } from "./extractHeadings";
 
-const Layout = ({ children, headings: headingsProp }: { children: React.ReactNode, headings?: any }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+  headings?: any;
+  showEditButton?: boolean;
+  onEditClick?: () => void;
+  pageTitle?: string;
+}
+
+const Layout = ({ children, headings: headingsProp, showEditButton = false, onEditClick, pageTitle }: LayoutProps) => {
   const headings = headingsProp || extractHeadingsFromChildren(children);
 
   return (
@@ -67,7 +75,18 @@ const Layout = ({ children, headings: headingsProp }: { children: React.ReactNod
         
         <main className="flex-1 flex justify-center items-start overflow-y-auto">
           <div className="max-w-4xl w-full p-4 sm:p-6 lg:p-8">
-            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
+            <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden relative">
+              {/* Edit Page Button - Temporarily hidden */}
+              {/* {showEditButton && onEditClick && (
+                <button
+                  onClick={onEditClick}
+                  className="absolute top-4 right-4 z-10 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm font-medium shadow-lg"
+                  title={`Edit ${pageTitle || 'this page'}`}
+                >
+                  <FaEdit className="h-4 w-4" />
+                  Edit Page
+                </button>
+              )} */}
               {children}
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -8,8 +8,11 @@ export const InstallationSectionHeadings = [
   { id: "using-metta-from-python", title: "Using MeTTa from Python", level: 2 },
 ];
 
-const InstallationSection = () => (
-  <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
+const InstallationSection = () => {
+  const navigation = getNavigationItems("installation");
+  
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="installation-and-setup" className="text-3xl font-bold mb-4">Installation and Setup</h1>
     <p className="mb-4">
       MeTTa comes bundled with Hyperon. To install locally, ensure you have Python 3.8+ and use pip:
@@ -90,8 +93,9 @@ else:
         </li>
       </ul>
     </div>
-    <SectionNav next={{ label: "Functional Programming", slug: "functional-programming" }} />
-  </div>
-);
+    <SectionNav previous={navigation.previous} next={navigation.next} />
+    </div>
+  );
+};
 
 export default InstallationSection; 

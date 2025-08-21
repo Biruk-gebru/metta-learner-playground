@@ -13,75 +13,41 @@ import {
   FaList,
   FaBookOpen,
 } from "react-icons/fa";
+import { getNavigationData } from "../utils/navigation";
 
 const Sidebar = ({ dark = false }: { dark?: boolean }) => {
   const router = useRouter();
+  const navigationData = getNavigationData();
 
-  const navigation = [
-    {
-      title: "Getting Started",
-      items: [
-        { label: "Installation", href: "/installation", icon: FaCog },
-        {
-          label: "What is MeTTa?",
-          href: "/what-is-metta",
-          icon: FaQuestionCircle,
-        },
-        {
-          label: "Functional Programming",
-          href: "/functional-programming",
-          icon: FaRocket,
-        },
-      ],
-    },
-    {
-      title: "Core Concepts",
-      items: [
-        { label: "Atomspace", href: "/atomspace", icon: FaBrain },
-        {
-          label: "Non-Determinism",
-          href: "/nondeterminism",
-          icon: FaLightbulb,
-        },
-        { label: "Recursion", href: "/recursion", icon: FaCode },
-        { label: "Standard Library", href: "/standard-library", icon: FaBook },
-      ],
-    },
-    {
-      title: "Best Practices",
-      items: [
-        { label: "Best Practices", href: "/best-practices", icon: FaLightbulb },
-      ],
-    },
-    {
-      title: "Resources",
-      items: [
-        { label: "Glossary", href: "/glossary", icon: FaBookOpen },
-        { label: "References", href: "/references", icon: FaList },
-      ],
-    },
-    {
-      title: "Projects",
-      items: [
-        {
-          label: "Family Tree",
-          href: "/projects/family-tree",
-          icon: FaProjectDiagram,
-        },
-        {
-          label: "Python Integration",
-          href: "/projects/python-integration",
-          icon: FaCode,
-        },
-        {
-          label: "Neuro-Symbolic",
-          href: "/projects/neuro-symbolic",
-          icon: FaBrain,
-        },
-        { label: "List Utils", href: "/projects/list-utils", icon: FaCode },
-      ],
-    },
-  ];
+  // Map navigation data to include icons
+  const getIconForSlug = (slug: string) => {
+    const iconMap: { [key: string]: any } = {
+      'installation': FaCog,
+      'what-is-metta': FaQuestionCircle,
+      'functional-programming': FaRocket,
+      'atomspace': FaBrain,
+      'nondeterminism': FaLightbulb,
+      'recursion': FaCode,
+      'standard-library': FaBook,
+      'best-practices': FaLightbulb,
+      'glossary': FaBookOpen,
+      'references': FaList,
+      'projects/family-tree': FaProjectDiagram,
+      'projects/python-integration': FaCode,
+      'projects/neuro-symbolic': FaBrain,
+      'projects/list-utils': FaCode,
+    };
+    return iconMap[slug] || FaBook;
+  };
+
+  const navigation = navigationData.sections.map(section => ({
+    title: section.title,
+    items: section.items.map(item => ({
+      label: item.label,
+      href: `/${item.slug}`,
+      icon: getIconForSlug(item.slug)
+    }))
+  }));
 
   const isActive = (href: string) => {
     return router.pathname === href || router.asPath.startsWith(href);

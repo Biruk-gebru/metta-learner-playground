@@ -139,7 +139,7 @@ export default function Home() {
                 </a>
               </Link>
               
-              <a href="https://discord.gg/opencog" target="_blank" rel="noopener noreferrer" className="group bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300">
+              <a href="https://discord.com/invite/snet" target="_blank" rel="noopener noreferrer" className="group bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                     <FaUsers className="h-6 w-6 text-blue-600 dark:text-blue-400" />

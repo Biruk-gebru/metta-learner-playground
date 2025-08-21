@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 import { extractHeadingsFromChildren } from "../components/extractHeadings";
 
@@ -16,7 +16,10 @@ export const FunctionalProgrammingSectionHeadings = [
   { id: "sequential-unification", title: "Sequential Unification", level: 3 }
 ];
 
-const FunctionalProgrammingSection = () => (
+const FunctionalProgrammingSection = () => {
+  const navigation = getNavigationItems("functional-programming");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-sm sm:text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 className="text-2xl sm:text-3xl font-bold mb-4">MeTTa and OpenCog Hyperon Guide</h1>
     <h2 id="introduction" className="text-xl sm:text-2xl font-semibold mt-6 sm:mt-8 mb-2">Introduction</h2>
@@ -69,8 +72,9 @@ const FunctionalProgrammingSection = () => (
     <p className="mb-4">
       Because <code>let</code> and <code>let*</code> use unification, you can do more than just assign values—you can destructure data, match patterns, and write more general code. This is a powerful feature that sets MeTTa apart from many other functional languages.
     </p>
-    <SectionNav previous={{ label: "Installation", slug: "installation" }} next={{ label: "What is MeTTa?", slug: "what-is-metta" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default FunctionalProgrammingSection; 

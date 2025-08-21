@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import FunctionalProgrammingSection, { FunctionalProgrammingSectionHeadings } from "../sections/FunctionalProgrammingSection";
@@ -13,15 +13,64 @@ import ProjectFamilyTreeSection, { ProjectFamilyTreeSectionHeadings } from "../s
 import ProjectNondeterministicMathSection, { ProjectNondeterministicMathSectionHeadings } from "../sections/ProjectNondeterministicMathSection";
 import ProjectNeuroSymbolicSection, { ProjectNeuroSymbolicSectionHeadings } from "../sections/ProjectNeuroSymbolicSection";
 import ProjectListUtilsSection, { ProjectListUtilsSectionHeadings } from "../sections/ProjectListUtilsSection";
+import dynamic from 'next/dynamic';
 
 export default function ChapterPage() {
   const router = useRouter();
   const { slug } = router.query;
   const joined = Array.isArray(slug) ? slug.join("/") : slug;
 
+  // Visual Editor temporarily disabled
+  // const [showEditor, setShowEditor] = useState(false);
+  // const [fileContent, setFileContent] = useState<string>("");
+  // const [pageTitle, setPageTitle] = useState<string>("");
+
+  // const openEditor = useCallback(async () => {
+  //   if (!joined) return;
+  //   try {
+  //     const res = await fetch(`/api/content/get?slug=${joined}`);
+  //     const data = await res.json();
+  //     if (!res.ok) throw new Error(data.error || 'Failed to load content');
+  //     setFileContent(data.content || "");
+  //     // Guess a page title from slug
+  //     setPageTitle(String(joined).split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Edit Page');
+  //     setShowEditor(true);
+  //   } catch (e) {
+  //     console.error(e);
+  //     alert('Failed to load page content for editing');
+  //   }
+  // }, [joined]);
+
+  // const handleSaveDraft = useCallback(async (content: string) => {
+  //   try {
+  //     const payload = {
+  //       title: pageTitle || 'Untitled Edit',
+  //       content,
+  //       slug: joined,
+  //     };
+  //     const res = await fetch('/api/contributions/save-draft', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(payload),
+  //   });
+  //   if (!res.ok) throw new Error(await res.text());
+  //   setShowEditor(false);
+  //   alert('Draft saved. An admin can open a PR from this draft.');
+  // } catch (e: any) {
+  //   alert(`Failed to save draft: ${e.message}`);
+  // }
+  // }, [joined, pageTitle]);
+
+  const commonLayoutProps = {
+    showEditButton: false, // Temporarily disabled
+    onEditClick: () => {}, // Temporarily disabled
+    pageTitle: "",
+  } as const;
+
+  // Render pages
   if (joined === "functional-programming") {
     return (
-      <Layout headings={FunctionalProgrammingSectionHeadings}>
+      <Layout headings={FunctionalProgrammingSectionHeadings} {...commonLayoutProps}>
         <div className="prose dark:prose-invert max-w-none">
           <FunctionalProgrammingSection />
         </div>
@@ -30,83 +79,83 @@ export default function ChapterPage() {
   }
   if (joined === "what-is-metta") {
     return (
-      <Layout headings={WhatIsMettaSectionHeadings}>
+      <Layout headings={WhatIsMettaSectionHeadings} {...commonLayoutProps}>
         <WhatIsMettaSection />
       </Layout>
     );
   }
   if (joined === "nondeterminism") {
     return (
-      <Layout headings={NonDeterminismSectionHeadings}>
+      <Layout headings={NonDeterminismSectionHeadings} {...commonLayoutProps}>
         <NonDeterminismSection />
       </Layout>
     );
   }
   if (joined === "atomspace") {
     return (
-      <Layout headings={AtomspaceSectionHeadings}>
+      <Layout headings={AtomspaceSectionHeadings} {...commonLayoutProps}>
         <AtomspaceSection />
       </Layout>
     );
   }
   if (joined === "standard-library") {
     return (
-      <Layout headings={StdLibHighlightsSectionHeadings}>
+      <Layout headings={StdLibHighlightsSectionHeadings} {...commonLayoutProps}>
         <StdLibHighlightsSection />
       </Layout>
     );
   }
   if (joined === "recursion") {
     return (
-      <Layout headings={RecursionSectionHeadings}>
+      <Layout headings={RecursionSectionHeadings} {...commonLayoutProps}>
         <RecursionSection />
       </Layout>
     );
   }
   if (joined === "best-practices") {
     return (
-      <Layout headings={BestPracticesSectionHeadings}>
+      <Layout headings={BestPracticesSectionHeadings} {...commonLayoutProps}>
         <BestPracticesSection />
       </Layout>
     );
   }
   if (joined === "installation") {
     return (
-      <Layout headings={InstallationSectionHeadings}>
+      <Layout headings={InstallationSectionHeadings} {...commonLayoutProps}>
         <InstallationSection />
       </Layout>
     );
   }
   if (joined === "projects/family-tree") {
     return (
-      <Layout headings={ProjectFamilyTreeSectionHeadings}>
+      <Layout headings={ProjectFamilyTreeSectionHeadings} {...commonLayoutProps}>
         <ProjectFamilyTreeSection />
       </Layout>
     );
   }
   if (joined === "projects/python-integration") {
     return (
-      <Layout headings={ProjectNondeterministicMathSectionHeadings}>
+      <Layout headings={ProjectNondeterministicMathSectionHeadings} {...commonLayoutProps}>
         <ProjectNondeterministicMathSection />
       </Layout>
     );
   }
   if (joined === "projects/neuro-symbolic") {
     return (
-      <Layout headings={ProjectNeuroSymbolicSectionHeadings}>
+      <Layout headings={ProjectNeuroSymbolicSectionHeadings} {...commonLayoutProps}>
         <ProjectNeuroSymbolicSection />
       </Layout>
     );
   }
   if (joined === "projects/list-utils") {
     return (
-      <Layout headings={ProjectListUtilsSectionHeadings}>
+      <Layout headings={ProjectListUtilsSectionHeadings} {...commonLayoutProps}>
         <ProjectListUtilsSection />
       </Layout>
     );
   }
   return (
-    <Layout>
+    <Layout {...commonLayoutProps}>
       <div className="text-center text-red-500">Page not found.</div>
     </Layout>
   );

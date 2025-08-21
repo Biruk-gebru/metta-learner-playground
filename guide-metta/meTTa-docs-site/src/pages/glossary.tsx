@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { FaSearch, FaBook, FaExternalLinkAlt } from "react-icons/fa";
 import Layout from "../components/Layout";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 
 const GLOSSARY = [
   { 
@@ -80,6 +81,7 @@ const GLOSSARY = [
 export default function GlossaryPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const navigation = getNavigationItems("glossary");
 
   const categories = useMemo(() => {
     const cats = new Set(GLOSSARY.map(item => item.category));
@@ -213,6 +215,11 @@ export default function GlossaryPage() {
           >
             Suggest a new term <FaExternalLinkAlt className="ml-1 h-3 w-3" />
           </a>
+        </div>
+        
+        {/* Navigation */}
+        <div className="mt-8">
+          <SectionNav previous={navigation.previous} next={navigation.next} />
         </div>
       </div>
     </Layout>

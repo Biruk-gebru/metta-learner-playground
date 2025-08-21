@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import Layout from "../components/Layout";
 import { FaSearch, FaExternalLinkAlt, FaBook, FaCode, FaUniversity, FaFileAlt } from "react-icons/fa";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 
 type Reference = {
   id: string;
@@ -89,6 +90,7 @@ export default function ReferencesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const navigation = getNavigationItems("references");
 
   // Get all unique tags for filter
   const allTags = useMemo(() => {
@@ -284,6 +286,11 @@ export default function ReferencesPage() {
               ))}
             </div>
           )}
+        </div>
+        
+        {/* Navigation */}
+        <div className="mt-8">
+          <SectionNav previous={navigation.previous} next={navigation.next} />
         </div>
       </div>
     </Layout>

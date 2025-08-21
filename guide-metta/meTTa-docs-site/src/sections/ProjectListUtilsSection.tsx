@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
 export const ProjectListUtilsSectionHeadings = [
@@ -16,7 +16,10 @@ export const ProjectListUtilsSectionHeadings = [
   { id: "examples", title: "Example Usages", level: 2 },
 ];
 
-const ProjectListUtilsSection = () => (
+const ProjectListUtilsSection = () => {
+  const navigation = getNavigationItems("projects/list-utils");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-100 bg-slate-900 rounded-2xl shadow">
     <h1 id="list-utils-project" className="text-3xl font-bold mb-4">Project 3: List Utilities & Custom Data Types</h1>
     <h2 id="goal" className="text-2xl font-semibold mt-8 mb-2">Project Goal</h2>
@@ -351,8 +354,9 @@ const ProjectListUtilsSection = () => (
 ! (foldr + 0 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))))
 ! (quicksort (Cons 8 (Cons 7 (Cons 6 (Cons 1 (Cons 0 (Cons 9 (Cons 2 Nil))))))))
 ! (remove-duplicates (Cons 1 (Cons 2 (Cons 2 (Cons 3 (Cons 1 (Cons 4 Nil)))))))`} />
-    <SectionNav previous={{ label: "Python/MeTTa Integration", slug: "projects/python-integration" }} next={{ label: "Neuro-Symbolic", slug: "projects/neuro-symbolic" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default ProjectListUtilsSection; 

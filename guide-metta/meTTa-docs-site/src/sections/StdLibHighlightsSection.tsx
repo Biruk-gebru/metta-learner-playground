@@ -1,5 +1,5 @@
 import React from "react";
-import SectionNav from "../components/SectionNav";
+import SectionNav, { getNavigationItems } from "../components/SectionNav";
 import dynamic from "next/dynamic";
 const CodeEditor = dynamic(() => import("../components/CodeEditor"), { ssr: false });
 
@@ -7,7 +7,10 @@ export const StdLibHighlightsSectionHeadings = [
   { id: "metta-standard-library-highlights", title: "MeTTa Standard Library Highlights", level: 1 },
 ];
 
-const StdLibHighlightsSection = () => (
+const StdLibHighlightsSection = () => {
+  const navigation = getNavigationItems("standard-library");
+  
+  return (
   <div className="max-w-3xl mx-auto px-4 py-8 text-base leading-relaxed text-gray-900 dark:text-gray-100 bg-white dark:bg-slate-900 rounded-2xl shadow">
     <h1 id="metta-standard-library-highlights" className="text-3xl font-bold mb-4">MeTTa Standard Library Highlights</h1>
     <p className="mb-4">
@@ -43,8 +46,9 @@ const StdLibHighlightsSection = () => (
     <div className="mt-8 p-4 bg-indigo-50 dark:bg-indigo-900 rounded-xl text-indigo-900 dark:text-indigo-200">
       <b>For more details, see the <a href="https://metta-stdlib.readthedocs.io/en/latest/mathematical_operations.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700 dark:hover:text-indigo-300">MeTTa Standard Library documentation</a>.</b>
     </div>
-    <SectionNav previous={{ label: "Atomspace & Data Types", slug: "atomspace" }} next={{ label: "Recursion", slug: "recursion" }} />
+    <SectionNav previous={navigation.previous} next={navigation.next} />
   </div>
-);
+  );
+};
 
 export default StdLibHighlightsSection; 

@@ -1,14 +1,16 @@
+import React from "react";
 import Link from "next/link";
-
-interface NavItem {
-  label: string;
-  slug: string;
-}
+import { getNavigationItems as getNavItems, NavigationItem } from "../utils/navigation";
 
 interface SectionNavProps {
-  previous?: NavItem;
-  next?: NavItem;
+  previous?: NavigationItem;
+  next?: NavigationItem;
 }
+
+// Utility function to get previous and next navigation items
+export const getNavigationItems = (currentSlug: string): { previous?: NavigationItem; next?: NavigationItem } => {
+  return getNavItems(currentSlug);
+};
 
 const SectionNav = ({ previous, next }: SectionNavProps) => (
   <div className="flex justify-between mt-8 gap-4">
